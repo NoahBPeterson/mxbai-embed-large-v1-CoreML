@@ -18,9 +18,9 @@ model = ct.models.MLModel("SentenceTransformer.mlpackage")
 
 # Print the full spec (for more details)
 #print("\nFull Model Specification:")
-print(model.get_spec())
+#print(model.get_spec())
 
-sys.exit()
+#sys.exit()
 
 # Load the tokenizer
 tokenizer = AutoTokenizer.from_pretrained("mixedbread-ai/mxbai-embed-large-v1")
@@ -40,8 +40,8 @@ coreml_input = {"input_ids": input_ids, "attention_mask": attention_mask}
 config = ct.ComputeUnit.ALL
 
 # Perform inference
-for i in range(0, 1000):
-	predictions = model.predict(coreml_input)
+#for i in range(0, 1000):
+predictions = model.predict(coreml_input)
 # Get the hidden states (output of the model)
 hidden_states = predictions['hidden_states']
 
