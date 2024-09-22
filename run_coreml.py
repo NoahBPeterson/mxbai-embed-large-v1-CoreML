@@ -1,7 +1,6 @@
 import coremltools as ct
 from transformers import AutoTokenizer
 import numpy as np
-import sys
 
 # Load the CoreML model
 model = ct.models.MLModel("mxbai-embed-large-v1.mlpackage")
@@ -37,11 +36,3 @@ np.set_printoptions(threshold=np.inf)
 
 # Print the CLS token embedding, which is a 1024-dimensional vector
 print("CLS Token Embedding:", cls_embedding, len(cls_embedding))
-#print(predictions)
-# Output results
-#print(predictions)
-
-#curl http://localhost:11434/api/embeddings -d '{
-#  "model": "mxbai-embed-large",
-#  "prompt": "This is a test sentence for the CoreML model"
-#}'

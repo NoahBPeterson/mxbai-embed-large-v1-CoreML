@@ -1,4 +1,3 @@
-import sys
 import torch
 from transformers import AutoModel, AutoTokenizer
 import coremltools as ct
