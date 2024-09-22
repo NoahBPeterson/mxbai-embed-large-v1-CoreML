@@ -19,9 +19,6 @@ attention_mask = inputs['attention_mask'].astype(np.float32)
 # Prepare inputs for the CoreML model
 coreml_input = {"input_ids": input_ids, "attention_mask": attention_mask}
 
-# Set the compute units to "all" to prefer ANE
-config = ct.ComputeUnit.ALL
-
 # Perform inference
 #for i in range(0, 1000):
 predictions = model.predict(coreml_input)
