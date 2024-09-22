@@ -4,23 +4,7 @@ import numpy as np
 import sys
 
 # Load the CoreML model
-model = ct.models.MLModel("SentenceTransformer.mlpackage")
-
-# Print input descriptions
-#print("Model Inputs:")
-#for input in model.input_description:
-#    print(f"Name: {input}, Type: {model.input_description[input]}")
-
-# Print output descriptions
-#print("\nModel Outputs:")
-#for output in model.output_description:
-#    print(f"Name: {output}, Type: {model.output_description[output]}")
-
-# Print the full spec (for more details)
-#print("\nFull Model Specification:")
-#print(model.get_spec())
-
-#sys.exit()
+model = ct.models.MLModel("mxbai-embed-large-v1.mlpackage")
 
 # Load the tokenizer
 tokenizer = AutoTokenizer.from_pretrained("mixedbread-ai/mxbai-embed-large-v1")
@@ -53,7 +37,7 @@ np.set_printoptions(threshold=np.inf)
 
 # Print the CLS token embedding, which is a 1024-dimensional vector
 print("CLS Token Embedding:", cls_embedding, len(cls_embedding))
-
+#print(predictions)
 # Output results
 #print(predictions)
 

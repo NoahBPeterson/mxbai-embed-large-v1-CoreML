@@ -17,12 +17,12 @@ class ModelWrapper(torch.nn.Module):
 # Load your SentenceTransformer model and tokenizer
 model_name = "mixedbread-ai/mxbai-embed-large-v1"  # Replace with your model
 model = AutoModel.from_pretrained(model_name)
-#model.eval()
+model.eval()
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 
 # Wrap the model to return only the tensor output
 wrapped_model = ModelWrapper(model)
-#wrapped_model.eval()
+wrapped_model.eval()
 
 # Sample input to export the model
 dummy_input = tokenizer("This is a sample input", return_tensors="pt")
@@ -37,8 +37,10 @@ model_from_torch = ct.convert(
         ct.TensorType(name="input_ids", shape=(1, ct.RangeDim(1, 512))),
         ct.TensorType(name="attention_mask", shape=(1, ct.RangeDim(1, 512)))
     ],
+    minimum_deployment_target=ct.target.iOS17,
     convert_to="mlprogram",
+    compute_precision=ct.precision.FLOAT32
 )
 
 # Save the CoreML model as an mlpackage
-model_from_torch.save("SentenceTransformer.mlpackage")
+model_from_torch.save("mxbai-embed-large-v1.mlpackage")
