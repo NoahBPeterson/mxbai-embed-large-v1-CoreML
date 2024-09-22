@@ -1,3 +1,4 @@
+import numpy as np
 import torch
 from transformers import AutoModel, AutoTokenizer
 import coremltools as ct
@@ -33,12 +34,12 @@ traced_model = torch.jit.trace(wrapped_model, (dummy_input['input_ids'], dummy_i
 model_from_torch = ct.convert(
     traced_model,
     inputs=[
-        ct.TensorType(name="input_ids", shape=(1, ct.RangeDim(1, 512))),
-        ct.TensorType(name="attention_mask", shape=(1, ct.RangeDim(1, 512)))
+        ct.TensorType(name="input_ids", shape=(1, ct.RangeDim(1, 512)), dtype=np.float32),
+        ct.TensorType(name="attention_mask", shape=(1, ct.RangeDim(1, 512)), dtype=np.float32)
     ],
     minimum_deployment_target=ct.target.iOS17,
     convert_to="mlprogram",
-    compute_precision=ct.precision.FLOAT32
+    compute_precision=ct.precision.FLOAT16
 )
 
 # Save the CoreML model as an mlpackage
