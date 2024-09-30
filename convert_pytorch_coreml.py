@@ -25,7 +25,7 @@ wrapped_model = ModelWrapper(model)
 wrapped_model.eval()
 
 # Sample input to export the model
-dummy_input = tokenizer("This is a sample input", return_tensors="pt")
+dummy_input = tokenizer("This is a sample input", return_tensors="pt", padding='max_length', max_length=512)
 
 # Trace the model using tensor inputs (input_ids, attention_mask)
 traced_model = torch.jit.trace(wrapped_model, (dummy_input['input_ids'], dummy_input['attention_mask']))
@@ -34,12 +34,11 @@ traced_model = torch.jit.trace(wrapped_model, (dummy_input['input_ids'], dummy_i
 model_from_torch = ct.convert(
     traced_model,
     inputs=[
-        ct.TensorType(name="input_ids", shape=(1, ct.RangeDim(1, 512)), dtype=np.float32),
-        ct.TensorType(name="attention_mask", shape=(1, ct.RangeDim(1, 512)), dtype=np.float32)
+        ct.TensorType(name="input_ids", shape=(1, 512), dtype=np.int32),
+        ct.TensorType(name="attention_mask", shape=(1, 512), dtype=np.int32)
     ],
-    minimum_deployment_target=ct.target.iOS17,
+    minimum_deployment_target=ct.target.iOS18,
     convert_to="mlprogram",
-    compute_precision=ct.precision.FLOAT16
 )
 
 # Save the CoreML model as an mlpackage

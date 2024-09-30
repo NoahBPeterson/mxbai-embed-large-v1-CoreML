@@ -10,11 +10,11 @@ tokenizer = AutoTokenizer.from_pretrained("mixedbread-ai/mxbai-embed-large-v1")
 
 # Prepare some input text
 input_text = "This is a test sentence for the CoreML model"
-inputs = tokenizer(input_text, return_tensors="np", padding=True, truncation=True, max_length=512)
+inputs = tokenizer(input_text, return_tensors="np", padding='max_length', max_length=512)
 
 # Extract input tensors
-input_ids = inputs['input_ids'].astype(np.float32)  # CoreML expects float32
-attention_mask = inputs['attention_mask'].astype(np.float32)
+input_ids = inputs['input_ids'].astype(np.int32)
+attention_mask = inputs['attention_mask'].astype(np.int32)
 
 # Prepare inputs for the CoreML model
 coreml_input = {"input_ids": input_ids, "attention_mask": attention_mask}
