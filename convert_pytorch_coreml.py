@@ -25,7 +25,7 @@ wrapped_model = ModelWrapper(model)
 wrapped_model.eval()
 
 # Sample input to export the model
-dummy_input = tokenizer("This is a sample input", return_tensors="pt", padding='max_length', max_length=512)
+dummy_input = tokenizer("This is a sample input", return_tensors="pt")
 
 # Trace the model using tensor inputs (input_ids, attention_mask)
 traced_model = torch.jit.trace(wrapped_model, (dummy_input['input_ids'], dummy_input['attention_mask']))
@@ -34,10 +34,10 @@ traced_model = torch.jit.trace(wrapped_model, (dummy_input['input_ids'], dummy_i
 model_from_torch = ct.convert(
     traced_model,
     inputs=[
-        ct.TensorType(name="input_ids", shape=(1, 512), dtype=np.int32),
-        ct.TensorType(name="attention_mask", shape=(1, 512), dtype=np.int32)
+        ct.TensorType(name="input_ids", shape=(1, ct.RangeDim(1, 512)), dtype=np.int32),
+        ct.TensorType(name="attention_mask", shape=(1, ct.RangeDim(1, 512)), dtype=np.int32)
     ],
-    minimum_deployment_target=ct.target.iOS18,
+    minimum_deployment_target=ct.target.iOS17,
     convert_to="mlprogram",
 )
 
@@ -46,4 +46,4 @@ model_from_torch.save("mxbai-embed-large-v1.mlpackage")
 
 from shutil import copytree
 compiled_model_path = model_from_torch.get_compiled_model_path()
-copytree(compiled_model_path, "mxbai-embed-large-v1-test-iOS18.mlmodelc", dirs_exist_ok=True)
+copytree(compiled_model_path, "mxbai-embed-large-v1.mlmodelc", dirs_exist_ok=True)

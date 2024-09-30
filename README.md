@@ -1,6 +1,6 @@
 # CoreML Conversion of the mxbai-embed-large-v1 sentence embedding model
 
-After extensive testing (and a lot of debugging with ChatGPT), I was able to convert the mxbai-embed-large-v1 model to CoreML and run it mostly on the GPU.
+After extensive testing (and a lot of debugging with ChatGPT), I was able to convert the mxbai-embed-large-v1 model to CoreML and run it mostly on the GPU. The ANE version ran 4x slower for 1000x embeddings than ollama, and was reverted.
 
 I verified the output with ollama:
 
