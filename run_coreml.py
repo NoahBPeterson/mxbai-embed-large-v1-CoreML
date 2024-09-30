@@ -3,7 +3,7 @@ from transformers import AutoTokenizer
 import numpy as np
 
 # Load the CoreML model
-model = ct.models.MLModel("mxbai-embed-large-v1.mlpackage")
+model = ct.models.CompiledMLModel("mxbai-embed-large-v1-test-iOS18.mlmodelc")
 
 # Load the tokenizer
 tokenizer = AutoTokenizer.from_pretrained("mixedbread-ai/mxbai-embed-large-v1")

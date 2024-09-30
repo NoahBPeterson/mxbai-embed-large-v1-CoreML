@@ -43,3 +43,7 @@ model_from_torch = ct.convert(
 
 # Save the CoreML model as an mlpackage
 model_from_torch.save("mxbai-embed-large-v1.mlpackage")
+
+from shutil import copytree
+compiled_model_path = model_from_torch.get_compiled_model_path()
+copytree(compiled_model_path, "mxbai-embed-large-v1-test-iOS18.mlmodelc", dirs_exist_ok=True)
