@@ -3,7 +3,7 @@ from transformers import AutoTokenizer
 import numpy as np
 
 # Load the CoreML model
-model = ct.models.CompiledMLModel("mxbai-embed-large-v1-test-iOS18.mlmodelc")
+model = ct.models.CompiledMLModel("mxbai-embed-large-v1.mlmodelc")
 
 # Load the tokenizer
 tokenizer = AutoTokenizer.from_pretrained("mixedbread-ai/mxbai-embed-large-v1")
@@ -21,9 +21,8 @@ coreml_input = {"input_ids": input_ids, "attention_mask": attention_mask}
 
 # Perform inference
 #for i in range(0, 1000):
-predictions = model.predict([coreml_input] * 1000)
+predictions = model.predict([coreml_input] * 1)
 # Get the hidden states (output of the model)
-print(predictions)
 hidden_states = predictions[0]['hidden_states']
 
 # Extract the embedding for the [CLS] token (the first token in the sequence)
